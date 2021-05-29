@@ -8,3 +8,14 @@ services:
     volumes:
       - .:/app
     working_dir: /app
+  mongo:
+    image: mongo
+    restart: always
+    volumes:
+      - mongodata:/data/db
+    ports:
+      - 27017:27017
+    env_file:
+      - .env
+volumes:
+  mongodata:
