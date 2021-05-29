@@ -1,0 +1,5 @@
+version: '3'
+
+services:
+  node:
+    command: sh -c "yarn start"
