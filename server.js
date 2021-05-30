@@ -1,6 +1,7 @@
 const express = require('express');
 const dotenv = require('dotenv');
 const morgan = require('morgan');
+const errorHandler = require('./middleware/error');
 const connectDB = require('./config/db');
 
 // load env vars
@@ -20,8 +21,12 @@ if (process.env.NODE_ENV === 'development') {
 // body parser
 app.use(express.json());
 
+// routes
 const bootcamps = require('./routes/bootcamps');
 app.use('/api/v1/bootcamps', bootcamps);
+
+// error middleware
+app.use(errorHandler);
 
 const server = app.listen(PORT);
 server.on('unhandledRejection', (err, promise) => {
