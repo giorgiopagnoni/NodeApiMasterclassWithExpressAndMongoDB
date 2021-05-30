@@ -11,9 +11,14 @@ const PORT = process.env.PORT;
 connectDB();
 
 const app = express();
+
+// dev logging middleware
 if (process.env.NODE_ENV === 'development') {
     app.use(morgan('dev'));
 }
+
+// body parser
+app.use(express.json());
 
 const bootcamps = require('./routes/bootcamps');
 app.use('/api/v1/bootcamps', bootcamps);
