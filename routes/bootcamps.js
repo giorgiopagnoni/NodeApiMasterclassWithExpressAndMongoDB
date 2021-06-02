@@ -13,7 +13,11 @@ router.route('/')
     .post(createBootcamp)
 router.route('/:id')
     .get(getBootcamp)
-    .put(updateBootcamp)
+    .put((req, res, next) => {
+        // we don't want the clients to update the location directly
+        delete req.body.location;
+        next();
+    },updateBootcamp)
     .delete(deleteBootcamp)
 
 module.exports = router;
