@@ -107,4 +107,15 @@ BootcampSchema.pre('save', async function (next) {
     next();
 });
 
+// update slug
+BootcampSchema.pre('findOneAndUpdate', async function (next) {
+    const updateReq = this.getUpdate();
+    if (updateReq.name) {
+        updateReq.slug = slugify(updateReq.name, {lower: true});
+        this.setUpdate(updateReq);
+    }
+
+    next();
+});
+
 module.exports = mongoose.model('Bootcamp', BootcampSchema);
