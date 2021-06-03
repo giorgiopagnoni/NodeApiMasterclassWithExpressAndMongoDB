@@ -8,7 +8,7 @@ const Bootcamp = require('./../models/Bootcamp');
 const bootcamps = JSON.parse(fs.readFileSync(`${__dirname}/../_data/bootcamps.json`, 'utf-8'));
 
 const importData = async () => {
-    try{
+    try {
         await connectDB();
         await Bootcamp.create(bootcamps);
         console.log('data imported');
@@ -19,7 +19,7 @@ const importData = async () => {
 }
 
 const deleteData = async () => {
-    try{
+    try {
         await connectDB();
         await Bootcamp.deleteMany();
         console.log('data deleted');
@@ -29,8 +29,8 @@ const deleteData = async () => {
     }
 }
 
-if(process.argv[2] === '-i'){
+if (process.argv[2] === '-i') {
     importData();
-}else if(process.argv[2] === '-d'){
+} else if (process.argv[2] === '-d') {
     deleteData();
 }
