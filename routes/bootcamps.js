@@ -24,4 +24,7 @@ router.route('/:id')
 
 router.route('/radius/:country/:zipcode/:distance').get(getBootcampsInRadius);
 
+const courseRouter = require('./courses');
+router.use('/:bootcampId/courses', courseRouter);
+
 module.exports = router;
