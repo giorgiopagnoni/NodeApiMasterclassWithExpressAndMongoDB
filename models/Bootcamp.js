@@ -99,8 +99,19 @@ const BootcampSchema = new mongoose.Schema({
             default: Date.now
         },
 
+    }, {
+        toJSON: {virtuals: true},
+        toObject: {virtuals: true},
     }
 );
+
+// virtuals
+BootcampSchema.virtual('courses', {
+    ref: 'Course',
+    localField: '_id',
+    foreignField: 'bootcamp',
+    justOne: false
+})
 
 // create slug
 BootcampSchema.pre('save', async function (next) {
@@ -131,6 +142,12 @@ BootcampSchema.pre('findOneAndUpdate', async function (next) {
     this.setUpdate(updateReq);
     next();
 });
+
+// cascade delete courses when bootcamp is deleted
+BootcampSchema.pre('remove', async function (next) {
+    await this.model('Course').deleteMany({bootcamp: this._id});
+    next();
+})
 
 async function getGeocodedLocationFromAddress(address) {
     const loc = await geocoder.geocode(address);
