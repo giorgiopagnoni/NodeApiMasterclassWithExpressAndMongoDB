@@ -5,7 +5,8 @@ const {
     getBootcamp,
     updateBootcamp,
     deleteBootcamp,
-    getBootcampsInRadius
+    getBootcampsInRadius,
+    bootcampPhotoUpload
 } = require('../controllers/bootcamps');
 
 const router = express.Router();
@@ -19,9 +20,10 @@ router.route('/:id')
         // we don't want the clients to update the location directly
         delete req.body.location;
         next();
-    },updateBootcamp)
+    }, updateBootcamp)
     .delete(deleteBootcamp)
 
+router.route('/:id/photo').put(bootcampPhotoUpload);
 router.route('/radius/:country/:zipcode/:distance').get(getBootcampsInRadius);
 
 const courseRouter = require('./courses');

@@ -131,6 +131,8 @@ BootcampSchema.pre('save', async function (next) {
 // update slug & location if present in request
 BootcampSchema.pre('findOneAndUpdate', async function (next) {
     const updateReq = this.getUpdate();
+    if (!updateReq) return next();
+
     if (updateReq.name) {
         updateReq.slug = slugify(updateReq.name, {lower: true});
     }
